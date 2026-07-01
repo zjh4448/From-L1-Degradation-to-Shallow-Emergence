@@ -1,0 +1,66 @@
+data:
+  train_dir: "dataset/train"
+  val_dir: "dataset/val"
+  test_dir: "dataset/test"
+  exr_epsilon: 0.001
+
+model:
+  type: "tiny"
+  features: [32, 48, 64]
+
+training:
+  batch_size: 16
+  patch_size: 128
+  epochs: 60
+  lr: 0.0005
+  weight_decay: 0.00001
+  lr_patience: 10
+  lr_factor: 0.5
+  min_lr: 0.00001
+  grad_clip: 1.0
+  gradient_accumulation: 1
+  use_amp: false
+  num_workers: 0
+  warmup_epochs: 5
+  seed: 42
+
+loss:
+  primary: "l1"
+  # 通道加权 L1
+  use_channel_weight: true
+  channel_weights: [1.5, 1.0, 2.5]  # R, G, B
+  # 偏亮惩罚（独立开关，与通道权重解耦）
+  use_positive_bias: true
+  positive_bias_weight: 0.3
+  # 多尺度
+  use_multiscale: true
+  multiscale_weight: 0.1
+  multiscale_start_epoch: 5
+  multiscale_scales: [1, 2, 4]
+  multiscale_scale_weights: [1.0, 0.5, 0.25]
+  # 梯度
+  use_gradient: true
+  gradient_weight: 0.05
+  gradient_start_epoch: 5
+  # 感知（暂不使用）
+  use_perceptual: false
+  perceptual_weight: 0.02
+  perceptual_start_epoch: 999
+
+data_augmentation:
+  hflip_prob: 0.5
+  vflip_prob: 0.5
+  rotate_90_prob: 0.3
+  color_jitter: false
+
+validation:
+  val_every: 1
+  save_best: true
+  early_stop_patience: 25
+  metrics: ["psnr", "ssim"]
+
+output:
+  checkpoint_dir: "output_n2n/checkpoints"
+  log_dir: "output_n2n/logs"
+  vis_dir: "output_n2n/visualizations"
+  save_every: 2
