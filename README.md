@@ -14,8 +14,12 @@ pip install -r requirements.txt
 ```
 
 > **Note**: `requirements.txt` contains the full environment export but **excludes** `torch`, `torchvision`, and `torchaudio` to avoid version conflicts. These must be installed separately via the PyTorch command above.
+**Translation:**
+
+> **Note**: The data generation scripts are available on the [Releases](https://github.com/zjh4448/From-L1-Degradation-to-Shallow-Emergence/releases) page of this repository. Please download `ai_py.zip` separately to generate the data. Place the generated `test`, `train`, `val`, and `sponza` folders under the `dataset` directory. It is worth noting that there are two different versions of the `train` and `val` datasets; please choose the appropriate one according to the instructions below.
 
 ---
+
 
 ## I. ABCD Ablation Experiments (Chapter 3)
 Trained on the Cornell Box dataset.
